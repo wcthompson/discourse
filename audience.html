@@ -17,12 +17,14 @@
 
   <body>
     <h1>Who Do You Want to Hear?</h1>
-    <div class="side" id="blue">Blue Side</div>
-    <div class="side" id="red">Red Side</div>
+    <button class="side" id="blue">Blue Side</button>
+    <button class="side" id="red">Red Side</button>
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+      var socket = io();
+
       var curSelection = null;
 
       $("#blue").click(function() {

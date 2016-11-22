@@ -19,6 +19,10 @@ app.get('/clientB', function(req, res){
   res.sendFile(__dirname + '/clientB.html');
 });
 
+app.get('/audience', function(req, res){
+  res.sendFile(__dirname + '/audience.html');
+});
+
 io.on('connection', function(socket){
   // set up client handlers
   socket.on('CLIENT A WORD', function(word){
@@ -27,6 +31,10 @@ io.on('connection', function(socket){
 
   socket.on('CLIENT B WORD', function(word){
     io.emit('SERVER ADD WORD CLIENT B', word)
+  });
+
+  socket.on('INCREMENT VOTE', function(vote){
+    io.emit('SERVER INCREMENT VOTE', vote)
   });
 
   socket.on('CHANGE SIDES', function(word){
