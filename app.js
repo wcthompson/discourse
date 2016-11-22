@@ -33,11 +33,7 @@ io.on('connection', function(socket){
     io.emit('SERVER ADD WORD CLIENT B', word)
   });
 
-  socket.on('INCREMENT VOTE', function(vote){
-    io.emit('SERVER INCREMENT VOTE', vote)
-  });
-
-  socket.on('CHANGE SIDES', function(word){
+  socket.on('CHANGE SIDES', function(){
     io.emit('SERVER CHANGE SIDES')
   });
 });
