@@ -1,5 +1,9 @@
 {
-  "name": "hacker_battle",
+  "engines": {
+    "node": "4.5.0"
+  },
+  "start": "node app.js",
+  "name": "public-discourse",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
