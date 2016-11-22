@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Public Discourse</title>
+    <title>Fair and Balanced</title>
     <style>
       #bg-img {
         content: "";
@@ -25,21 +25,16 @@
       }
 
       body {
-        color: white;
+        color: rgb(230, 230, 230);
         text-align: center;
         font-family: 'Montserrat', sans-serif;
       }
 
       #title {
         font-size: 3em;
-        -webkit-text-stroke-width: 1px;
-        -webkit-text-stroke-color: black;
         font-family: 'Bungee Inline', cursive;
-      }
-
-      #quote {
-        font-size: 2em;
-        font-family: 'Great Vibes', cursive;
+        margin-top: 4px;
+        margin-bottom: 4px;
       }
 
       #main-area {
@@ -50,7 +45,8 @@
       }
 
       #question h2 {
-        
+        font-size: 1.4em;
+        color:white;
       }
 
       #play-button {
@@ -61,12 +57,28 @@
         cursor: pointer;
         margin-left: 12px;
       }
+      #header {
+        background-color: rgba(255, 255, 255, 0);
+        width: 300px;
+        
+        position: relative;
+        border-radius: 4px;
+        margin:auto;
+        padding: 10px 10px 0 0: 
+
+      }
+
+      #and {
+        font-size: .7em;
+        color: #f442a4;
+      }
     </style>
   </head>
   <body>
   <div id="bg-img"></div>
-    <h1 id="title">Public Discourse</h1>
-    <h2 id="quote">"The truth always lies in the middle."</h2>
+  <div id="header">
+    <h1 id="title">"Fair" <br> <span id='and'>and</span> "Balanced"</h1>
+  </div>
     <div id=question>
       <h2></h2>
     </div>
@@ -102,7 +114,7 @@
       }
 
       var q = questions[Math.floor(Math.random()*questions.length)];
-      $('#question h2').text(q);
+      $('#question h2').text('Topic: ' + q);
 
       var socket = io();
       socket.emit('QUESTION', q);
