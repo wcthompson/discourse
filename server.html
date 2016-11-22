@@ -105,11 +105,11 @@
         if (sendTo === 'A') {
           $('#main-area').append($('<span>').css('color', 'blue').text(word_a));
           passageText += word_a;
-          speak(word_a,0.9);
+          return speak(word_a,0.9);
         } else if(sendTo === 'B') {
           $('#main-area').append($('<span>').css('color', 'red').text(word_b));
           passageText += word_b;
-          speak(word_b,0.9);
+          return speak(word_b,0.9);
         }
       }
 
@@ -121,17 +121,11 @@
       socket.on('SERVER ADD WORD CLIENT A', function(word){
         clientAWords.push(word);
         //make sure there are enough words in the other list
-        if (clientBWords.length > 0){
-          putNextWord();
-        }
       });
 
       socket.on('SERVER ADD WORD CLIENT B', function(word){
         clientBWords.push(word);
         //make sure there are enough words in the other list
-        if (clientAWords.length > 0){
-          putNextWord();
-        }
       });
 
       socket.on('SERVER CHANGE SIDES', function(){
@@ -156,7 +150,15 @@
         responsiveVoice.speak(passageText)
       }
 
+      function recurNextWords() {
+        if (clientAWords.length > 0 && clientBWords.length > 0){
+          putNextWord().then(recurNextWords);
+        } else {
+          setTimeout(recurNextWords, 500);
+        }
+      }
 
+      recurNextWords();
     </script>
   </body>
 </html>
