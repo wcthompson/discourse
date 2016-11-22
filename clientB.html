@@ -3,6 +3,10 @@
   <head>
     <title>Public Discourse</title>
     <style>
+      .word {
+        background-color: #aaa;
+        margin-right: 0.5em;
+      }
     </style>
   </head>
 
@@ -31,7 +35,7 @@
       }
 
       $("#word-input").on({
-        change: function() {
+        input: function() {
           if (this.value.search(/\s/g) != -1) {
             sendWords(this.value);
             this.value = "";
