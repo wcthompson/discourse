@@ -36,6 +36,10 @@ io.on('connection', function(socket){
   socket.on('CHANGE SIDES', function(){
     io.emit('SERVER CHANGE SIDES')
   });
+
+  socket.on('QUESTION', function(q){
+    io.emit('QUESTION', q);
+  })
 });
 
 http.listen(3000, function(){
