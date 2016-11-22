@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Public Discourse</title>
+    <style>
+      .side {
+        margin: 2em;
+        width: 30%;
+        height: 30%;
+
+        border-style: solid;
+        border-width: 3px;
+        border-color: gray;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Who Do You Want to Hear?</h1>
+    <div class="side" id="blue">Blue Side</div>
+    <div class="side" id="red">Red Side</div>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      var curSelection = null;
+
+      $("#blue").click(function() {
+        if (curSelection === null) {
+          socket.emit("INCREMENT VOTE", {"red": 0, "blue": 1});
+        } else if (curSelection != "blue") {
+          socket.emit("INCREMENT VOTE", {"red": -1, "blue": 1});
+        }
+
+        $("#blue").css("border-color", "blue");
+        $("#red").css("border-color", "gray");
+        curSelection = "blue";
+      });
+
+      $("#red").click(function() {
+        if (curSelection === null) {
+          socket.emit("INCREMENT VOTE", {"red": 1, "blue": 0});
+        } else if (curSelection != "red") {
+          socket.emit("INCREMENT VOTE", {"red": 1, "blue": -1});
+        }
+
+        $("#blue").css("border-color", "gray");
+        $("#red").css("border-color", "red");
+        curSelection = "red";
+      });
+    </script>
+  </body>
+</html>

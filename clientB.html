@@ -4,20 +4,26 @@
     <title>Public Discourse</title>
     <style>
       .word {
-        background-color: #aaa;
-        margin-right: 0.5em;
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+      }
+
+      #messages {
+        display: inline-block;
+        width: 50%;
       }
     </style>
   </head>
 
   <body>
     <h1>Client B</h1>
-    <div id="messages"></div>
+    <div id="messages">
     <input type="text" name="input" id="word-input" />
+    </div>
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js"></script>
     <script>
       var socket = io();
 
@@ -25,11 +31,12 @@
         var splitWords = words.split(/\s+/g);
         splitWords.forEach(function(w) {
           if (w.length > 0) {
-            socket.emit('client_b_word', w);
+            socket.emit('CLIENT B WORD', w);
 
             var span = $( document.createElement('span') );
             span.addClass('word').text(w);
-            $("#messages").append(span);
+            $("#word-input").before(span);
+            $("#word-input").before(" ");
           }
         });
       }
