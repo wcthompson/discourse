@@ -5,7 +5,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 // questions and answers
-var questions = []
+var questions = ["Bop it!"]
 
 eval(fs.readFileSync("lib/nodeMarkov.js","utf-8"));
 // set up the markov generators
