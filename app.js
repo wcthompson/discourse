@@ -1,17 +1,11 @@
 var fs = require('fs');
-
-var app = require('express')();
+var express = require('express');
+var app = express()
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-// questions and answers
-var questions = ["Bop it!"]
-
-eval(fs.readFileSync("lib/nodeMarkov.js","utf-8"));
-// set up the markov generators
-var charMarkov = new MarkovGenerator(3, 30);
-var wordMarkov = new MarkovGeneratorWord(2, 25);
-
+//ROUTES
+app.use(express.static('public'))
 
 app.get('/server', function(req, res){
   res.sendFile(__dirname + '/server.html');
@@ -26,14 +20,17 @@ app.get('/clientB', function(req, res){
 });
 
 io.on('connection', function(socket){
-  socket.on('client a keypress', function(key){
-    io.emit('keypress', "pressed " + key);
-    io.emit('server_keypress', "Client A pressed " + key);
+  // set up client handlers
+  socket.on('CLIENT A WORD', function(word){
+    io.emit('SERVER ADD WORD CLIENT A', word)
   });
 
-  socket.on('client b keypress', function(key){
-    io.emit('keypress', "pressed " + key);
-    io.emit('server_keypress', "Client B pressed " + key);
+  socket.on('CLIENT B WORD', function(word){
+    io.emit('SERVER ADD WORD CLIENT B', word)
+  });
+
+  socket.on('CHANGE SIDES', function(word){
+    io.emit('SERVER CHANGE SIDES')
   });
 });
 

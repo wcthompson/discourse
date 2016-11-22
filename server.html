@@ -1,26 +1,86 @@
 <!doctype html>
 <html>
   <head>
-    <title>Spaceteam</title>
+    <title>Public Discourse</title>
     <style>
-	  #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
+      body {
+        text-align: center;
+      }
+
+      #main-area {
+        margin: 5px 5px 10px 10px; 
+        padding: 5px;
+        border: 2px black solid;
+        font-family: 'Eczar', serif;
+
+
+      }
+
+      #question h2 {
+        font: 2em bold;
+      }
     </style>
   </head>
   <body>
-    <h1>SERVER</h1>
-    <ul id="messages"></ul>
-    <h2 id="task"></h2>>
+    <h1>Public Discourse</h1>
+    <div id=question>
+      <h2></h2>
+    </div>
+    <div id="main-area"></div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js"></script>
-    <script>
-      var socket = io();
+    <script src="lib/responsivevoice.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Eczar" rel="stylesheet">
 
-      socket.on('server_keypress', function(msg){
-        $('#messages').append($('<li>').text(msg));
+    <script>
+
+      var questions = ["Butter on the buttom or butter on top?"];
+      var clientAWords = [];
+      var clientBWords = [];
+      var sendTo = 'A';
+      
+      function putNextWord() {
+        var word_a = clientAWords.shift() + " ";
+        var word_b = clientBWords.shift() + " ";
+        console.log('putting a word')
+        if (sendTo === 'A') {
+          $('#main-area').append($('<span>').css('color', 'blue').text(word_a));
+          speak(word_a,0.9);
+        } else if(sendTo === 'B') {
+          $('#main-area').append($('<span>').css('color', 'red').text(word_b));
+          speak(word_b,0.9);
+        }
+      }
+
+      var q = questions[Math.floor(Math.random()*questions.length)];
+      $('#question h2').text(q);
+
+      var socket = io();
+      socket.on('SERVER ADD WORD CLIENT A', function(word){
+        clientAWords.push(word);
+        //make sure there are enough words in the other list
+        if (clientBWords.length > 0){
+          putNextWord();
+        }
       });
+
+      socket.on('SERVER ADD WORD CLIENT B', function(word){
+        clientBWords.push(word);
+        //make sure there are enough words in the other list
+        if (clientAWords.length > 0){
+          putNextWord();
+        }
+      });
+
+      socket.on('SERVER CHANGE SIDES', function(){
+        sendTo = sendTo == 'A' ? 'B' : 'A' // swap sides
+      });
+
+      function speak(string, rate){
+        //rate should be between 0.0 and 2.0
+        responsiveVoice.speak(string, "Australian Female", {rate: rate})
+      }
 
     </script>
   </body>
