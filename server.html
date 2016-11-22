@@ -11,6 +11,9 @@
         margin: 5px 5px 10px 10px; 
         padding: 5px;
         border: 2px black solid;
+        font-family: 'Eczar', serif;
+
+
       }
 
       #question h2 {
@@ -26,18 +29,21 @@
     <div id="main-area"></div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="lib/responsivevoice.js"></script>
     <script src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js"></script>
+    <script src="lib/responsivevoice.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Eczar" rel="stylesheet">
+
     <script>
-      
+
       var questions = ["Butter on the buttom or butter on top?"];
-      var clientAWords, clientBWords = [];
+      var clientAWords = [];
+      var clientBWords = [];
       var sendTo = 'A';
       
       function putNextWord() {
-        var word_a = clientAWords.shift();
-        var word_b = clientBWords.shift();
-
+        var word_a = clientAWords.shift() + " ";
+        var word_b = clientBWords.shift() + " ";
+        console.log('putting a word')
         if (sendTo === 'A') {
           $('#main-area').append($('<span>').css('color', 'blue').text(word_a));
           speak(word_a,0.9);

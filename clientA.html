@@ -25,7 +25,7 @@
         var splitWords = words.split(/\s+/g);
         splitWords.forEach(function(w) {
           if (w.length > 0) {
-            socket.emit('client_a_word', w);
+            socket.emit('CLIENT A WORD', w);
 
             var span = $( document.createElement('span') );
             span.addClass('word').text(w);
