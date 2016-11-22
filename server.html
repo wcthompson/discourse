@@ -3,36 +3,81 @@
   <head>
     <title>Public Discourse</title>
     <style>
+      #bg-img {
+        content: "";
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: -5px;
+        z-index: -1;
+        
+        display: block;
+        background-image: url('https://scontent-yyz1-1.xx.fbcdn.net/v/t34.0-12/15129827_1346536735410135_2005724073_n.png?oh=cd94c8ad9a3480ec65e3d02d1316c90a&oe=5836A9E8');
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+        filter: blur(5px);
+      }
+
       body {
+        color: white;
         text-align: center;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      #title {
+        font-size: 3em;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: black;
+        font-family: 'Bungee Inline', cursive;
+      }
+
+      #quote {
+        font-size: 2em;
+        font-family: 'Great Vibes', cursive;
       }
 
       #main-area {
         margin: 5px 5px 10px 10px; 
-        padding: 5px;
+        padding: 10px;
         border: 2px black solid;
-        font-family: 'Eczar', serif;
-
-
+        font-family: 'Montserrat', sans-serif;
+        background-color: rgba(255, 255, 255, .8);
       }
 
       #question h2 {
-        font: 2em bold;
+        
+      }
+
+      #play-button {
+        width: 100px;
+        height: 20px;
+        border: 2px white solid;
+        border-radius: 4px;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <h1>Public Discourse</h1>
+  <div id="bg-img"></div>
+    <h1 id="title">Public Discourse</h1>
+    <h2 id="quote">"The truth always lies in the middle."</h2>
     <div id=question>
       <h2></h2>
     </div>
     <div id="main-area"></div>
+    <div id="play-button">Play</div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js"></script>
     <script src="lib/responsivevoice.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Eczar" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Inline|Montserrat|Oswald|Great+Vibes" rel="stylesheet">
     <script>
 
       var questions = ["Butter on the buttom or butter on top?"];
@@ -77,10 +122,18 @@
         sendTo = sendTo == 'A' ? 'B' : 'A' // swap sides
       });
 
+      $('#play-button').click(replayPassage);
+
       function speak(string, rate){
         //rate should be between 0.0 and 2.0
         responsiveVoice.speak(string, "Australian Female", {rate: rate})
       }
+
+      function replayPassage() {
+        console.log('playing passage from beginning');
+        responsivevoice.speak($('main-area').text())
+      }
+
 
     </script>
   </body>
