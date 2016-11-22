@@ -45,7 +45,7 @@
       #main-area {
         margin: 5px 5px 10px 10px; 
         padding: 10px;
-        border: 2px black solid;
+        border: 2px blue solid;
         background-color: rgba(255, 255, 255, .8);
       }
 
@@ -54,11 +54,12 @@
       }
 
       #play-button {
-        width: 100px;
+        width: 80px;
         height: 20px;
         border: 2px white solid;
         border-radius: 4px;
         cursor: pointer;
+        margin-left: 12px;
       }
     </style>
   </head>
@@ -121,7 +122,13 @@
       });
 
       socket.on('SERVER CHANGE SIDES', function(){
-        sendTo = sendTo == 'A' ? 'B' : 'A' // swap sides
+        if (sendTo =='A') {
+          $('#main-area').css('border', '2px solid red');
+          sendTo = 'B'
+        } else {
+          $('#main-area').css('border', '2px solid blue');
+          sendTo = 'A'
+        }
       });
 
       $('#play-button').click(replayPassage);
