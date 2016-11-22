@@ -1,33 +1,43 @@
 <!doctype html>
 <html>
   <head>
-    <title>Spaceteam</title>
+    <title>Public Discourse</title>
     <style>
-	  #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
     </style>
   </head>
+
   <body>
-    <h1>Client B</h1>
-    <ul id="messages"></ul>
+    <h1>Client A</h1>
+    <div id="messages"></div>
+    <input type="text" name="input" id="word-input" />
+
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js"></script>
     <script>
       var socket = io();
-      Mousetrap.bind('a', function() { 
-      	socket.emit('client a keypress', 'a')
-      });
 
-       Mousetrap.bind('b', function() { 
-      	socket.emit('client a keypress', 'b')
-      });
+      function sendWords(words) {
+        var splitWords = words.split(/\s+/g);
+        splitWords.forEach(function(w) {
+          if (w.length > 0) {
+            socket.emit('client_a_word', w);
 
-      socket.on('keypress', function(msg){
-        $('#messages').append($('<li>').text(msg));
-      });
+            var span = $( document.createElement('span') );
+            span.addClass('word').text(w);
+            $("#messages").append(span);
+          }
+        });
+      }
 
+      $("#word-input").on({
+        change: function() {
+          if (this.value.search(/\s/g) != -1) {
+            sendWords(this.value);
+            this.value = "";
+          }
+        }
+      });
     </script>
   </body>
 </html>
