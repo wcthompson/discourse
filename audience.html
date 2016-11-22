@@ -3,21 +3,34 @@
   <head>
     <title>Public Discourse</title>
     <style>
-      #side {
-        margin: 2em;
-        width: 30%;
-        height: 30%;
+      body {
+        background-image: url('https://scontent-yyz1-1.xx.fbcdn.net/v/t34.0-12/15129827_1346536735410135_2005724073_n.png?oh=cd94c8ad9a3480ec65e3d02d1316c90a&oe=5836A9E8');
+        background-size: cover;
 
-        border-style: solid;
-        border-width: 3px;
-        border-color: gray;
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+        filter: blur(5px);
+      }
+
+      #side {
+        width: 40%;
+        height: 200px;
+
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+
+        font-size: 4em;
+        font-family: 'Montserrat', sans-serif;
       }
     </style>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   </head>
 
   <body>
-    <h1>Who Do You Want to Hear?</h1>
-    <button id="side">Hear the Other Side</button>
+    <button id="side">I Want to Hear the Other Side!</button>
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
