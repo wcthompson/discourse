@@ -70,7 +70,7 @@
       <h2></h2>
     </div>
     <div id="main-area"></div>
-    <div id="play-button">Play</div>
+    <div id="play-button">Replay</div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js"></script>
@@ -82,6 +82,7 @@
       var questions = ["Butter on the buttom or butter on top?"];
       var clientAWords = [];
       var clientBWords = [];
+      var passageText = ""
       var sendTo = 'A';
       
       function putNextWord() {
@@ -90,9 +91,11 @@
         console.log('putting a word')
         if (sendTo === 'A') {
           $('#main-area').append($('<span>').css('color', 'blue').text(word_a));
+          passageText += word_a;
           speak(word_a,0.9);
         } else if(sendTo === 'B') {
           $('#main-area').append($('<span>').css('color', 'red').text(word_b));
+          passageText += word_b;
           speak(word_b,0.9);
         }
       }
@@ -129,8 +132,7 @@
       }
 
       function replayPassage() {
-        console.log('playing passage from beginning');
-        responsivevoice.speak($('main-area').text())
+        responsiveVoice.speak(passageText)
       }
 
 
