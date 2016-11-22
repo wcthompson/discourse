@@ -127,8 +127,9 @@
       $('#play-button').click(replayPassage);
 
       function speak(string, rate){
-        //rate should be between 0.0 and 2.0
-        responsiveVoice.speak(string, "Australian Female", {rate: rate})
+        return new Promise(function(resolve, reject) {
+            responsiveVoice.speak(string, "Australian Female", {"rate": rate, "onend": resolve});
+        });
       }
 
       function replayPassage() {
